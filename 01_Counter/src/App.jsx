@@ -34,6 +34,37 @@ function App() {
       setCounter(++counter) // pre-increment; first update then reference
       console.log("I increased counter to " , counter);
     } // don't go beyond 20
+
+    // An interesting interview question
+
+    // setCounter(++counter) // essentially you're doing 16
+    // setCounter(++counter) // 17
+    // setCounter(++counter) // 18
+    // setCounter(++counter) // 19
+
+    // What happens now? what will be the final value of counter after incrementing?
+    // We did pre-increment; The value indeed jumps by 5 first time, then by 4 since upper if block does not allow one execution
+
+    // But what if
+
+    // setCounter(counter + 1)
+    // setCounter(counter + 1)
+    // setCounter(counter + 1)
+    // setCounter(counter + 1)
+
+    // This is where batch scheduling of react kicks in;
+    // It will only increment the value by one, treating it as a same operation hence batch operation
+    // No matter how many setCounters you send
+
+    // If you want to achieve this for some reason however, you can send a callback function inside setCounter
+    // (or the pre-increment works too)
+
+    // Moral of the story, setCounter takes a callback function as an argument and works on it
+    setCounter((prevCounter) => prevCounter + 1)
+    setCounter((prevCounter) => prevCounter + 1)
+    setCounter((prevCounter) => prevCounter + 1)
+    setCounter((prevCounter) => prevCounter + 1)
+
   }
 
   const removeCount = function(){
