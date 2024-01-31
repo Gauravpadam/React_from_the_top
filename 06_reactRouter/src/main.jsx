@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import './index.css'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -8,7 +9,8 @@ import Layout from './components/Layout'
 import Home from './components/Home'
 import About from './components/About'
 import Contact from './components/Contact'
-import Github from './components/Github'
+import Github, { githubInfoLoader } from './components/Github'
+
 
 const router = createBrowserRouter([
   {
@@ -16,7 +18,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "home",
+        path: "",
         element: <Home />,
       },
       {
@@ -30,6 +32,7 @@ const router = createBrowserRouter([
       {
         path: "github",
         element: <Github />,
+        loader: githubInfoLoader
       },
     ]
   }
