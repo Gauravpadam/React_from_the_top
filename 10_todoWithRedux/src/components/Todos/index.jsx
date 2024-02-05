@@ -4,15 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Todos() {
 
-    const [msg, setMsg] = useState('') // updateTodo
     const [isTodoEditable, setIsTodoEditable] = useState('false') // updateTodo
     
     const todos = useSelector(state => state.todos)
     const dispatch = useDispatch()
-
-    const editTodoHandler = () => {
-        console.log("updateTodo")
-    }
 
     return (
         <div
@@ -20,10 +15,13 @@ function Todos() {
         >
             {todos.map((todo) => (
                 <div key={todo.id} className="w-full">
-                    <p className="text-black">{todo.text}</p>
+                    <input type="text" className={`border outline-none w-full bg-transparent rounded-lg ${
+                    isTodoEditable ? "border-black/10 px-2" : "border-transparent"}`} 
+                    value={todo.text} disabled={isTodoEditable} onChange={(e) => {dispatch(updateTodo({id: todo.id, text: e.target.value}))}}></input>
                     <button  onClick={() => {dispatch(removeTodo(todo.id))}}>
                         X
                     </button>
+                    <button onClick={() => {setIsTodoEditable(!isTodoEditable)}}>{isTodoEditable ? "Save" : "Edit"}</button>
                 </div>
             ))}
         </div>
