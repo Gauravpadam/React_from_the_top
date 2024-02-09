@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import authService from './appwrite/authService';
 import { useState, useEffect } from "react"
 import { login, logout } from './store/authSlice';
+import Container from './components/Container';
+import { Header } from './components/Header';
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -21,7 +23,11 @@ function App() {
     }) 
   }, [])
 
-  return !loading ? (<div className='min-h-screen flex bg-gray-400'>Test</div>) : (<div>Please wait</div>)
+  return !loading ? (
+  <div className='min-h-screen flex bg-gray-400'>
+    <Container children={Header} />
+
+  </div>) : (<div>Please wait</div>)
 }
 
 export default App

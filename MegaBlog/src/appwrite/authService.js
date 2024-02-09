@@ -1,6 +1,11 @@
 // Code modularity: When each of your code snippet can act independently without relying on its dependencies
 // You have written good code; else your code is s*** 
 
+// Why should I return the promises?
+// because components consume promises
+
+
+
 import { Client , Account , ID} from 'appwrite';
 import { conf } from '../../conf/conf';
 
@@ -23,6 +28,7 @@ export class AuthService {
 
             if (newAccount){
                 // call another function
+                this.login({email, password})
             }
         } catch (error) {
             throw error
@@ -50,7 +56,7 @@ export class AuthService {
 
     async logout(){
         try {
-            await this.account.deleteSessions()
+            return await this.account.deleteSessions()
         }
         catch (error){
             console.log(`appwrite :: logout :: error: ${error}`);
