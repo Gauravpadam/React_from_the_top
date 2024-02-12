@@ -26,14 +26,12 @@ export class StorageService{
         )
     }
 
-    listDocuments(queries = [Query.equal("status" , "active")]){
-        this.database.listDocuments(conf.databaseId, conf.collectionId, queries)
-        .then(
-            (res) => res.json
-            , (error) => {
-                console.log(`listDocuments :: error: ${error}`);
-            }
-        )
+    async listDocuments(queries = [Query.equal("status" , "active")]){
+        try {
+           return await this.database.listDocuments(conf.databaseId, conf.collectionId, queries)
+        } catch (error) {
+            console.log(`listDocuments :: error: ${error}`)
+        }
     }
 
     deleteDocument({slug}){
@@ -58,15 +56,13 @@ export class StorageService{
         )
     }
 
-    getDocument({slug}){
-        this.database.getDocument(conf.databaseId, conf.collectionId, slug)
-        .then(
-            (res) => {
-                console.log("Successful");
-            }, (error) => {
-                console.log(`getDocument :: error: ${error}`);
-            }
-        )
+    async getDocument({slug}){
+        try{
+            return await this.database.getDocument(conf.databaseId, conf.collectionId, slug)
+        } catch (error){
+            console.log(`getDocument :: error : ${error}`);
+            return false
+        }
     }
 
     uploadFile(file){
