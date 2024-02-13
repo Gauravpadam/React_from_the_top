@@ -5,6 +5,8 @@ import { useState, useEffect } from "react"
 import { login, logout } from './store/authSlice';
 import Container from './components/Container';
 import { Header } from './components/Header';
+import { Outlet } from 'react-router-dom';
+import { Footer } from './components/Footer';
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -25,8 +27,11 @@ function App() {
 
   return !loading ? (
   <div className='min-h-screen flex bg-gray-400'>
-    <Container children={Header} />
-
+    <div className='w-full block'>
+      <Header />
+        <Outlet />
+      <Footer />
+    </div>
   </div>) : (<div>Please wait</div>)
 }
 
