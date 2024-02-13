@@ -16,14 +16,12 @@ export class StorageService{
     }
 
     createDocument(payload){
-        this.database.createDocument(conf.databaseId, conf.collectionId, payload.slug, payload) // returns a promise
-        .then(
-            (res) => {
-                alert(`Document created successfully`);
-            }, (error) => {
-                throw error
-            }
-        )
+        try{
+            return this.database.createDocument(conf.databaseId, conf.collectionId, payload.slug, payload) // returns a promise
+        } catch (error) {
+            console.log(`createDocument :: error: ${error}`);
+            return false
+        }
     }
 
     async listDocuments(queries = [Query.equal("status" , "active")]){
@@ -31,29 +29,27 @@ export class StorageService{
            return await this.database.listDocuments(conf.databaseId, conf.collectionId, queries)
         } catch (error) {
             console.log(`listDocuments :: error: ${error}`)
+            return false
         }
     }
 
-    deleteDocument({slug}){
-        this.database.deleteDocument(conf.databaseId, conf.collectionId, slug)
-        .then(
-            (res) => {
-                alert(`Document deleted`)
-            }, (error) => {
-                console.log(`deleteDocument :: error: ${error}`);
-            }
-        )
+    async deleteDocument({slug}){
+        try{
+            return await this.database.deleteDocument(conf.databaseId, conf.collectionId, slug)
+        } catch (error) {
+            console.log(`deleteDocument :: error: ${error}`);
+            return false
+        }
+
     }
 
-    updateDocument(payload){
-        this.database.updateDocument(conf.databaseId, conf.collectionId, payload.slug, payload)
-        .then(
-            (res) => {
-                alert(`Document updated`);
-            }, (error) => {
-                console.log(`updateDocument :: error: ${error}`);
-            }
-        )
+    async updateDocument(payload){
+        try {
+            return await this.database.updateDocument(conf.databaseId, conf.collectionId, payload.slug, payload)
+        } catch (error) {
+            console.log(`updateDocument :: error: ${error}`);
+            return false
+        }
     }
 
     async getDocument({slug}){
@@ -65,35 +61,29 @@ export class StorageService{
         }
     }
 
-    uploadFile(file){
-        this.storage.createFile(
-            conf.bucketId,
-            ID.unique(),
-            file
-        )
-        .then(
-            (res) => {
-                return res
-            }, (error) => {
-                console.log(`uploadFile :: error: ${error}`);
-                return false
-            }
-        )
+    async uploadFile(file){
+        try {
+            return await this.storage.createFile(
+                conf.bucketId,
+                ID.unique(),
+                file
+            ) 
+        } catch (error) {
+            console.log(`uploadFile :: error: ${error}`);
+            return false
+        }
     }
 
-    deleteFile(fileId){
-        this.storage.deleteFile(
-            conf.bucketId,
-            fileId
-        )
-        .then(
-            (res) => {
-                return res
-            }, (error) => {
-                console.log(`uploadFile :: error: ${error}`);
-                return false
-            }
-        )
+    async deleteFile(fileId){
+        try {
+            return await this.storage.deleteFile(
+                conf.bucketId,
+                fileId
+            )
+        } catch (error) {
+            console.log(`deleteFile :: error: ${error}`);
+            return false
+        }
     }
 
     getFilePreview(fileId){

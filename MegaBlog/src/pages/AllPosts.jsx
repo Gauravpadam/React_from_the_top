@@ -8,7 +8,7 @@ function AllPosts(){
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        const posts = storageService.listDocuments()
+        storageService.listDocuments()
         .then((posts) => {
             if (posts){
                 setPosts(posts.documents)
@@ -32,3 +32,5 @@ function AllPosts(){
 
 
 }
+
+export default AllPosts
