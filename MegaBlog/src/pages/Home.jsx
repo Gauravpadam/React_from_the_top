@@ -7,12 +7,14 @@ function Home(){
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        storageService.listDocuments([])
-        .then((posts) => {
-            if (posts){
-                setPosts(posts)
+        (async function(){
+            await storageService.listDocuments([])
+        .then((resultPosts) => {
+            if (resultPosts){
+                setPosts(resultPosts.documents)
             }
         })
+    })(); // IIFE syntax ()();
     }, [])
 
     if (!posts){
@@ -36,13 +38,15 @@ function Home(){
             <h1>Your blogs</h1>
             <Container>
                 <div className="flex flex-wrap">
-                    {posts.map((post) => {
+                    {posts.map((post) => (
                         <div key={post.$id} className="p-2 w-1/4">
-                            <PostCard post={post} />
+                            <PostCard {...post} />
                         </div>
-                    }, [])}
+                    ))}
                 </div>
             </Container>
         </div>
     )
 }
+
+export default Home

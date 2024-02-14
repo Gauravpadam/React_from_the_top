@@ -1,4 +1,5 @@
-const Logo = ({width}) => {
+function Logo(){
     return <div>Logo</div>
 }
-export default Logo
+
+export default Logo;

@@ -1,7 +1,7 @@
-import { Login as Loginformcomponent} from '../components/Login'
+import Login from '../components/Login'
 
 function LoginPage(){
-    return <div classname="py-8"><Loginformcomponent /></div>
+    return <div className="py-8"><Login /></div>
 }
 
 export default LoginPage

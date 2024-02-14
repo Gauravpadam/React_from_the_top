@@ -1,8 +1,10 @@
-import {Signup as Signupformcomponent} from "../components/Signup";
+import { conf } from "../../conf/conf";
+import Signup from "../components/Signup";
 
 function SignUpPage(){
+    console.log(conf.databaseId);
     return <div className="py-8">
-        <Signupformcomponent />
+        <Signup />
     </div>
 }
 

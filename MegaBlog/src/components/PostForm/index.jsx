@@ -19,14 +19,14 @@ function PostForm({post}){
     })
 
     const navigate = useNavigate()
-    const UserData = useSelector(state => state.user.UserData)
+    const UserData = useSelector(state => state.auth.userData)
 
     const submit = async (data) => {
         if (post) {
             const file = data.image[0] ? storageService.uploadFile(data.image[0]) : null
 
             if (file) {
-                storageService.deleteFile(post.featuredImage)
+                await storageService.deleteFile(post.featuredImage)
             }
 
             const dbPost = await storageService.updateDocument(post.$id, {
@@ -34,7 +34,7 @@ function PostForm({post}){
                 featuredImage: file ? file.$id : undefined,
             })
 
-            if (dbPost) navigate(`/post/${dbPost.$id}`)
+            if (dbPost) navigate(`/post/${dbPost.$id}`);
         }
         else {
             const file = await storageService.uploadFile(data.image[0])
@@ -76,7 +76,7 @@ function PostForm({post}){
 
     } , [watch, ])
     return(
-        <form onSubmit={submit} className="flex flex-wrap">
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
                 <Input
                 type="text"

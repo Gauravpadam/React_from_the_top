@@ -13,7 +13,7 @@ function AuthLayout({children, authentication = true}){
     const authStatus = useSelector(state => state.auth.status)
 
     useEffect(() => {
-        if (authentication && authentication === authStatus){
+        if (authentication && authentication !== authStatus){ // A decently hard bug to spot '==='
             navigate("/login")
         } else if(!authentication && authentication !== authStatus){
             navigate("/")

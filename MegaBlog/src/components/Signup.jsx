@@ -14,14 +14,19 @@ const Signup = () => {
     const dispatch = useDispatch()
     const [error, setError] = useState("")
     const {register, handleSubmit} = useForm()
+    const navigate = useNavigate()
+
+    console.log(error);
 
     const signup = async (data) => {
+        setError("")
+        console.log(data);
         try {
             const userData = await authService.createAccount(data)
             if (userData){
                 const UserData = await authService.getCurrentUser()
-                if(userData) dispatch(login(UserData))
-                useNavigate("/")
+                if(userData) dispatch(login(UserData));
+                navigate("/")
             }
         } catch (error) {
             setError(error)
@@ -51,13 +56,21 @@ const Signup = () => {
                     <div className="space-y-5">
                         <Input
                         type="text"
+                        label="Name"
+                        placeholder="Enter your name"
+                        {...register("name", {
+                            required: true
+                        })}
+                        />
+                        <Input
+                        type="text"
                         label="Email"
                         placeholder="Enter Email"
                         className="w-full text-black px-4 py-2"
                         {...register("email", {
                             required: true,
                             validate: {
-                                matchPattern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                                Pattern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
                                 "Email address must be a valid address",
                             }
                         })}
@@ -70,7 +83,7 @@ const Signup = () => {
                         {...register("password", {
                             required: true,
                             validate: {
-                                matchPattern: /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/.test(value) ||
+                                Pattern: (value) => /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/.test(value) ||
                                 "Password must contain at least 1 Captial letter, small case letters and a symbol"
                             }
                         })}

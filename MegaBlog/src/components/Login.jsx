@@ -1,18 +1,21 @@
 import authService from "../appwrite/authService";
-import { UseDispatch, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
-import Container from "./Container";
 import { useState } from "react";
 import Button from "./Button";
 import { useForm } from 'react-hook-form'
 import {login as authLogin} from '../store/authSlice'
-import { Logo } from './Header/Logo'
+import Logo from './Header/Logo'
+
 
 function Login(){
 
     const [error, setError] = useState("")
     const {register, handleSubmit} = useForm()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const login = async (data) => {
         setError("")
         try {
@@ -20,8 +23,9 @@ function Login(){
             if (session) {
                 const userData = await authService.getCurrentUser()
                 if (userData){
-                    useDispatch(authLogin(userData))
-                    useNavigate("/")
+                    console.log(userData);
+                    dispatch(authLogin(userData))
+                    navigate("/")
                 }
             }
         }
@@ -85,4 +89,4 @@ function Login(){
     )
 }
 
-export default Login;
+export default Login

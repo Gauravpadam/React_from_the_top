@@ -1,11 +1,11 @@
 import Container from '../components/Container'
-import { PostForm as PostSubmissionPage } from '../components/PostForm'
+import PostForm from '../components/PostForm'
 
 function AddPost(){
     return (
     <div className='py-8'>
         <Container>
-            <PostSubmissionPage />
+            <PostForm />
         </Container>
     </div>
     )
